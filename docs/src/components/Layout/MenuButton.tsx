@@ -1,12 +1,14 @@
 import { Button, VisuallyHidden } from '@aws-amplify/ui-react';
 import { MdClose, MdMenu } from 'react-icons/md';
 
-export const MenuButton = ({ expanded, setExpanded }) => (
+export const MenuButton = ({ expanded, setExpanded, alwaysCollapsible }) => (
   <Button
     size="small"
     aria-expanded={expanded}
     aria-controls="docs-sidebar"
-    className={`docs-header-menu-button ${expanded ? 'close' : 'open'}`}
+    className={`docs-header-menu-button ${expanded ? 'close' : 'open'} ${
+      alwaysCollapsible ? 'always-collapsible' : null
+    }`}
     onClick={() => {
       setExpanded(!expanded);
     }}

@@ -28,6 +28,11 @@
     box-shadow: var(--amplify-shadows-small);
   }
 
+  &.always-collapsible {
+    border-bottom: var(--amplify-borders-secondary);
+    box-shadow: var(--amplify-shadows-small);
+  }
+
   transition: all var(--amplify-time-medium) ease;
 
   .scrolled .docs-home & {
@@ -50,8 +55,10 @@
     animation: showOverlay var(--amplify-time-long) forwards;
   }
 
-  @media (min-width: $breakpoint-large) {
-    display: none;
+  &:not(.always-collapsible){
+    @media (min-width: $breakpoint-large) {
+      display: none;
+    }
   }
 }
 
@@ -67,10 +74,12 @@
     -1 * var(--amplify-components-button-small-padding-inline-start)
   );
 
-  @media (min-width: $breakpoint-large) {
-    display: none;
-    .docs-home & {
-      display: inline-flex;
+  &:not(.always-collapsible) {
+    @media (min-width: $breakpoint-large) {
+      display: none;
+      .docs-home & {
+        display: inline-flex;
+      }
     }
   }
 

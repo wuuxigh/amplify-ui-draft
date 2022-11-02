@@ -25,6 +25,7 @@ import {
   RIGHT_NAV_LINKS,
   SOCIAL_LINKS,
 } from '@/data/globalnav';
+import { NavigationContext } from 'src/hooks/useNavigationContext';
 
 if (typeof window === 'undefined') {
   // suppress useLayoutEffect warnings when running outside a browser
@@ -46,6 +47,7 @@ if (typeof window === 'undefined') {
 
 function MyApp({ Component, pageProps }) {
   const [expanded, setExpanded] = React.useState(false);
+  const [alwaysCollapsible, setAlwaysCollapsible] = React.useState(false);
 
   const {
     pathname,
@@ -85,7 +87,9 @@ function MyApp({ Component, pageProps }) {
   }, [pathname]); // only track page visit if path has changed
 
   return (
-    <>
+    <NavigationContext.Provider
+      value={{ expanded, setExpanded, alwaysCollapsible, setAlwaysCollapsible }}
+    >
       <Head />
 
       <div className={isHomepage ? `docs-home` : ''}>
@@ -99,8 +103,6 @@ function MyApp({ Component, pageProps }) {
             />
           }
           <Header
-            expanded={expanded}
-            setExpanded={setExpanded}
             colorMode={colorMode}
             setColorMode={handleColorModeChange}
             platform={platform}
@@ -109,7 +111,8 @@ function MyApp({ Component, pageProps }) {
             <div
               className={classNames(
                 'docs-sidebar-spacer',
-                expanded ? 'expanded' : 'collapsed'
+                expanded ? 'expanded' : 'collapsed',
+                alwaysCollapsible ? 'always-collapsible' : null
               )}
             />
 
@@ -127,7 +130,7 @@ function MyApp({ Component, pageProps }) {
           <Script src="/scripts/shortbreadv2.js" />
         </>
       )}
-    </>
+    </NavigationContext.Provider>
   );
 }
 

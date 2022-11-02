@@ -233,13 +233,20 @@ const SecondaryNav = (props) => {
   );
 };
 
-export const Sidebar = ({ expanded, setExpanded, platform }) => {
+export const Sidebar = ({
+  expanded,
+  setExpanded,
+  alwaysCollapsible,
+  platform,
+}) => {
   const onClick = () => setExpanded(false);
   return (
     <nav
       aria-label="Main navigation"
       id="docs-sidebar"
-      className={`docs-sidebar ${expanded ? 'expanded' : 'collapsed'}`}
+      className={`docs-sidebar ${expanded ? 'expanded' : 'collapsed'} ${
+        alwaysCollapsible ? 'always-collapsible' : null
+      }`}
     >
       <div className="docs-sidebar-overlay" onClick={onClick} />
       <div className="docs-sidebar-inner">
@@ -249,8 +256,16 @@ export const Sidebar = ({ expanded, setExpanded, platform }) => {
             alignItems="center"
             justifyContent="space-between"
           >
-            <LogoLink platform={platform} onClick={onClick} />
-            <MenuButton expanded={expanded} setExpanded={setExpanded} />
+            <LogoLink
+              platform={platform}
+              onClick={onClick}
+              alwaysCollapsible={alwaysCollapsible}
+            />
+            <MenuButton
+              expanded={expanded}
+              setExpanded={setExpanded}
+              alwaysCollapsible={alwaysCollapsible}
+            />
           </Flex>
           <FrameworkChooser onClick={onClick} />
           <SecondaryNav onClick={onClick} platform={platform} />

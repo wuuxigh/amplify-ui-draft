@@ -17,14 +17,10 @@ import { GITHUB_REPO } from '@/data/links';
 import '@docsearch/css';
 import { GithubIcon } from '../Icons';
 import { FrameworkLogo } from '../Logo';
+import { useNavigationContext } from 'src/hooks/useNavigationContext';
 
-export const Header = ({
-  expanded,
-  setExpanded,
-  colorMode,
-  setColorMode,
-  platform,
-}) => {
+export const Header = ({ colorMode, setColorMode, platform }) => {
+  const { expanded, setExpanded, alwaysCollapsible } = useNavigationContext();
   const [showSearch, setShowSearch] = React.useState(false);
   const hiddenOnMobile = useBreakpointValue({
     base: false,
@@ -36,22 +32,34 @@ export const Header = ({
   }, [showSearch]);
 
   return (
-    <Flex as="header" className="docs-header">
-      <MenuButton expanded={expanded} setExpanded={setExpanded} />
+    <Flex
+      as="header"
+      className={`docs-header ${
+        alwaysCollapsible ? 'always-collapsible' : null
+      }`}
+    >
+      <MenuButton
+        expanded={expanded}
+        setExpanded={setExpanded}
+        alwaysCollapsible={alwaysCollapsible}
+      />
 
       <Sidebar
         expanded={expanded}
         setExpanded={setExpanded}
+        alwaysCollapsible={alwaysCollapsible}
         platform={platform}
       />
 
-      <LogoLink platform={platform} />
+      <LogoLink platform={platform} alwaysCollapsible={alwaysCollapsible} />
       <FrameworkLogo
         framework={platform}
         alt={platform}
         height="1.5rem"
         width="1.5rem"
-        className="docs-logo-framework"
+        className={`docs-logo-framework ${
+          alwaysCollapsible ? 'always-collapsible' : null
+        }`}
       />
 
       <Flex flex="1" justifyContent="flex-end" gap="small">
