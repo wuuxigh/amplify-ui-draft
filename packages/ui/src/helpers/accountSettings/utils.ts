@@ -1,4 +1,4 @@
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 
 import { AmplifyUser } from '../../types';
 import { getLogger } from '../utils';

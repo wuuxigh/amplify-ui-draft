@@ -4,7 +4,7 @@ import {
   humanFileSize,
   isValidExtension,
 } from '../uploader';
-import { Storage } from 'aws-amplify';
+import { Storage } from '@aws-amplify/storage';
 
 const storageSpy = jest.spyOn(Storage, 'put');
 const imageFile = new File(['hello'], 'hello.png', { type: 'image/png' });

@@ -19,7 +19,7 @@
     "@react-native-async-storage/async-storage": "^1.17.5",
     "@react-native-community/netinfo": "^8.3.0",
     "@xstate/react": "3.0.0",
-    "amazon-cognito-identity-js": "^5.2.11",
+    "amazon-cognito-identity-js": "inject-packages",
     "react": "17.0.2",
     "react-native": "0.68.1",
     "react-native-get-random-values": "^1.8.0",

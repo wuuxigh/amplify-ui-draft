@@ -1,4 +1,5 @@
-import { Amplify, Auth } from 'aws-amplify';
+// import { Amplify, Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 import { hasSpecialChars } from '../../helpers';
 
 import {
@@ -10,7 +11,7 @@ import {
 
 export const defaultServices = {
   async getAmplifyConfig() {
-    return Amplify.configure();
+    return Auth.configure();
   },
 
   async getCurrentUser() {

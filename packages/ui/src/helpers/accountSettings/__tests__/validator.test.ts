@@ -1,4 +1,4 @@
-import { Amplify } from 'aws-amplify';
+import { Auth as Amplify } from '@aws-amplify/auth';
 
 import {
   getDefaultPasswordValidators,
