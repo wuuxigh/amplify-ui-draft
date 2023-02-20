@@ -70,7 +70,13 @@
     "tslib": "2.4.1"
   },
   "peerDependencies": {
-    "aws-amplify": "inject-packages",
+    "@aws-amplify/auth": "inject-packages",
+    "@aws-amplify/cache": "inject-packages",
+    "@aws-amplify/core": "inject-packages",
+    "@aws-amplify/datastore": "inject-packages",
+    "@aws-amplify/notifications": "inject-packages",
+    "@aws-amplify/pubsub": "inject-packages",
+    "@aws-amplify/storage": "inject-packages",
     "react": ">= 16.14.0",
     "react-dom": ">= 16.14.0"
   },

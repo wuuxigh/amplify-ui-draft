@@ -49,7 +49,10 @@
     "tslib": "2.4.1"
   },
   "peerDependencies": {
-    "aws-amplify": "inject-packages",
+    "@aws-amplify/auth": "inject-packages",
+    "@aws-amplify/cache": "inject-packages",
+    "@aws-amplify/core": "inject-packages",
+    "@aws-amplify/notifications": "inject-packages",
     "xstate": "^4.33.6"
   },
   "peerDependenciesMeta": {

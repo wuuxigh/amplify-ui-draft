@@ -47,7 +47,11 @@
     "@aws-amplify/ui-react-core": "2.1.13"
   },
   "peerDependencies": {
-    "aws-amplify": "inject-packages",
+    "@aws-amplify/auth": "inject-packages",
+    "@aws-amplify/cache": "inject-packages",
+    "@aws-amplify/core": "inject-packages",
+    "@aws-amplify/notifications": "inject-packages",
+    "@aws-amplify/pubsub": "inject-packages",
     "react": ">= 16.14.0",
     "react-native": ">= 0.63.4",
     "react-native-safe-area-context": ">= 4.2.5"
