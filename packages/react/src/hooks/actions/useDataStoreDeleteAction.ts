@@ -4,7 +4,8 @@ import {
   PersistentModelMetaData,
   IdentifierFieldOrIdentifierObject,
 } from '@aws-amplify/datastore';
-import { DataStore, Hub } from 'aws-amplify';
+import { Hub } from '@aws-amplify/core';
+import { DataStore } from '@aws-amplify/datastore';
 
 import {
   ACTION_DATASTORE_DELETE_FINISHED,

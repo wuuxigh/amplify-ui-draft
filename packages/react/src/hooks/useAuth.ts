@@ -2,7 +2,7 @@ import * as React from 'react';
 
 import { Hub, HubCallback } from '@aws-amplify/core';
 import { AmplifyUser } from '@aws-amplify/ui';
-import { Auth } from 'aws-amplify';
+import { Auth } from '@aws-amplify/auth';
 
 export interface UseAuthResult {
   user?: AmplifyUser;

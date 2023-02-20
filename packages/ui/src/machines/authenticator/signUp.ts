@@ -1,4 +1,3 @@
-// import { Auth } from 'aws-amplify';
 import { Auth } from '@aws-amplify/auth';
 import { assign, createMachine, sendUpdate } from 'xstate';
 

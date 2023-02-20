@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback, useMemo } from 'react';
 import { UploadTask, Storage } from '@aws-amplify/storage';
 import { translate, uploadFile, isValidExtension } from '@aws-amplify/ui';
-import { Logger } from 'aws-amplify';
+import { Logger } from '@aws-amplify/core';
 
 import {
   Button as UploadButton,

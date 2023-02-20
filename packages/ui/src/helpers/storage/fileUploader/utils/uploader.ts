@@ -1,5 +1,4 @@
-import { Storage } from '@aws-amplify/storage';
-import { StorageAccessLevel } from '@aws-amplify/storage';
+import { Storage, StorageAccessLevel } from '@aws-amplify/storage';
 import { translate } from '../../../../i18n';
 
 export function uploadFile({

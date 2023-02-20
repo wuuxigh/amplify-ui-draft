@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Hub } from 'aws-amplify';
+import { Hub } from '@aws-amplify/core';
 
 import {
   ACTION_STATE_MUTATION_FINISHED,

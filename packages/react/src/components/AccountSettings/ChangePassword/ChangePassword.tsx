@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Logger } from 'aws-amplify';
+import { Logger } from '@aws-amplify/core';
 import {
   changePassword,
   ValidatorOptions,

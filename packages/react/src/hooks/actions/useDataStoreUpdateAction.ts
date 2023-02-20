@@ -1,9 +1,10 @@
 import {
+  DataStore,
   IdentifierFieldOrIdentifierObject,
   PersistentModel,
   PersistentModelMetaData,
 } from '@aws-amplify/datastore';
-import { DataStore, Hub } from 'aws-amplify';
+import { Hub } from '@aws-amplify/core';
 
 import {
   ACTION_DATASTORE_UPDATE_FINISHED,

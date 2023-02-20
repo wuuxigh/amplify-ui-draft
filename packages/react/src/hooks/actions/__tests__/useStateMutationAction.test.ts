@@ -1,4 +1,4 @@
-import { Hub } from 'aws-amplify';
+import { Hub } from '@aws-amplify/core';
 import { renderHook, act } from '@testing-library/react-hooks';
 
 import {

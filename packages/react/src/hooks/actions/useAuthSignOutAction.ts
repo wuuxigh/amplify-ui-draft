@@ -1,4 +1,5 @@
-import { Auth, Hub } from 'aws-amplify';
+import { Hub } from '@aws-amplify/core';
+import { Auth } from '@aws-amplify/auth';
 import { SignOutOpts } from '@aws-amplify/auth/lib-esm/types/Auth';
 
 import {

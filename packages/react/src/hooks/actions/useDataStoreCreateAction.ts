@@ -1,5 +1,5 @@
-import { PersistentModel } from '@aws-amplify/datastore';
-import { DataStore, Hub } from 'aws-amplify';
+import { Hub } from '@aws-amplify/core';
+import { DataStore, PersistentModel } from '@aws-amplify/datastore';
 
 import {
   ACTION_DATASTORE_CREATE_FINISHED,

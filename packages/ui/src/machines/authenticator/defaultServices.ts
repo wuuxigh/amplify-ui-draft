@@ -1,4 +1,3 @@
-// import { Amplify, Auth } from 'aws-amplify';
 import { Auth } from '@aws-amplify/auth';
 import { hasSpecialChars } from '../../helpers';
 
