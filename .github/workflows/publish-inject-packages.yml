@@ -1,0 +1,13 @@
+name: Publish / Inject Packages
+
+on:
+  push:
+    branches: [poc/inject-packages]
+
+jobs:
+  publish:
+    uses: ./.github/workflows/reusable-tagged-publish.yml
+    with:
+      dist-tag: inject-packages
+    secrets:
+      NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
