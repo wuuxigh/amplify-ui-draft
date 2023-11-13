@@ -20,7 +20,7 @@ import {
   verifyUserAttributesActor,
 } from './actors';
 
-import { defaultServices } from './defaultServices';
+import { defaultServices, getAmplifyConfig } from './defaultServices';
 
 export type AuthenticatorMachineOptions = AuthContext['config'] & {
   services?: AuthContext['services'];
@@ -85,7 +85,7 @@ export function createAuthenticatorMachine(
       context: {
         user: undefined,
         config: {},
-        services: defaultServices,
+        services: { ...defaultServices, ...getAmplifyConfig },
         actorRef: undefined,
         hasSetup: false,
       },

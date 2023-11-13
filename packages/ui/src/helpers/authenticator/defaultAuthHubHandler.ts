@@ -80,7 +80,7 @@ export const listenToAuthHub = (
   service: AuthInterpreter,
   // angular passes its own `handler` param
   handler: AuthMachineHubHandler = defaultAuthHubHandler
-) => {
+): ReturnType<typeof Hub.listen> => {
   return Hub.listen(
     'auth',
     getHubEventHandler(service, handler),

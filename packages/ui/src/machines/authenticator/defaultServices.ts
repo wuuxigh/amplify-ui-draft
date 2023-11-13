@@ -1,5 +1,5 @@
-import { Amplify } from 'aws-amplify';
-
+import { Amplify, ResourcesConfig } from 'aws-amplify';
+import { AuthConfig } from '@aws-amplify/core/src/singleton/Auth/types';
 import {
   confirmResetPassword,
   confirmSignIn,
@@ -9,6 +9,7 @@ import {
   signIn,
   signUp,
 } from 'aws-amplify/auth';
+
 import { hasSpecialChars } from '../../helpers';
 
 import {
@@ -24,43 +25,81 @@ import {
 // Cognito does not allow a password length less then 8 characters
 const DEFAULT_COGNITO_PASSWORD_MIN_LENGTH = 8;
 
-export const defaultServices = {
-  async getAmplifyConfig() {
-    const result = Amplify.getConfig();
+interface DefaultServices {
+  getCurrentUser: typeof getCurrentUser;
+  handleSignIn: typeof signIn;
+  handleSignUp: typeof signUp;
+  handleConfirmSignIn: typeof confirmSignIn;
+  handleConfirmSignUp: typeof confirmSignUp;
+  handleForgotPasswordSubmit: typeof confirmResetPassword;
+  handleForgotPassword: typeof resetPassword;
+  validateCustomSignUp(
+    formData: AuthFormData,
+    touchData: AuthTouchData
+  ): Promise<ValidatorResult>;
+  validateFormPassword(
+    formData: AuthFormData,
+    touchData: AuthTouchData,
+    passwordSettings: PasswordSettings
+  ): Promise<ValidatorResult>;
+  validateConfirmPassword(
+    formData: AuthFormData,
+    touchData: AuthTouchData
+  ): Promise<ValidatorResult>;
+  validatePreferredUsername(
+    formData: AuthFormData,
+    touchData: AuthTouchData
+  ): Promise<ValidatorResult>;
+}
+type NotNullCognito = AuthConfig['Cognito'];
+export type GetAmplifyConfigReturn = Promise<
+  Partial<NotNullCognito> & {
+    loginMechanisms: ('email' | 'phone_number' | 'username')[];
 
-    const cliConfig = result.Auth?.Cognito;
-    const { loginWith, userAttributes } = result.Auth?.Cognito ?? {};
+    signUpAttributes: SignUpAttribute[];
+    socialProviders: SocialProvider[];
+  }
+>;
 
-    const parsedLoginMechanisms = loginWith
-      ? (Object.entries(loginWith)
-          .filter(([key, _value]) => key !== 'oauth')
-          .filter(([_key, value]) => !!value)
-          .map((keyValueArray) => {
-            return keyValueArray[0] === 'phone' // the key for phone_number is phone in getConfig but everywhere else we treat is as phone_number
-              ? 'phone_number'
-              : keyValueArray[0];
-          }) as LoginMechanism[])
-      : undefined;
+export async function getAmplifyConfig(): GetAmplifyConfigReturn {
+  const result = Amplify.getConfig();
 
-    const parsedSignupAttributes = userAttributes
-      ? (Object.entries(userAttributes).map(
-          ([_key, value]) => Object.keys(value)[0]
-        ) as SignUpAttribute[])
-      : undefined;
+  const cliConfig = result.Auth?.Cognito;
+  const { loginWith, userAttributes } = result.Auth?.Cognito ?? {};
 
-    const parsedSocialProviders = loginWith?.oauth?.providers
-      ? (loginWith.oauth.providers?.map((provider) =>
-          provider.toString().toLowerCase()
-        ) as SocialProvider[])
-      : undefined;
+  const parsedLoginMechanisms = loginWith
+    ? (Object.entries(loginWith)
+        .filter(([key, _value]) => key !== 'oauth')
+        .filter(([_key, value]) => !!value)
+        .map((keyValueArray) => {
+          return keyValueArray[0] === 'phone' // the key for phone_number is phone in getConfig but everywhere else we treat is as phone_number
+            ? 'phone_number'
+            : keyValueArray[0];
+        }) as LoginMechanism[])
+    : undefined;
 
-    return {
-      ...cliConfig,
-      loginMechanisms: parsedLoginMechanisms,
-      signUpAttributes: parsedSignupAttributes,
-      socialProviders: parsedSocialProviders,
-    };
-  },
+  const parsedSignupAttributes = userAttributes
+    ? (Object.entries(userAttributes).map(
+        ([_key, value]) => Object.keys(value)[0]
+      ) as SignUpAttribute[])
+    : undefined;
+
+  const parsedSocialProviders = loginWith?.oauth?.providers
+    ? (loginWith.oauth.providers?.map((provider) =>
+        provider.toString().toLowerCase()
+      ) as SocialProvider[])
+    : undefined;
+
+  return {
+    ...cliConfig,
+    loginMechanisms: parsedLoginMechanisms,
+    signUpAttributes: parsedSignupAttributes,
+    socialProviders: parsedSocialProviders,
+  };
+}
+
+// @todo fixme
+export const defaultServices: DefaultServices = {
   getCurrentUser,
   handleSignIn: signIn,
   handleSignUp: signUp,

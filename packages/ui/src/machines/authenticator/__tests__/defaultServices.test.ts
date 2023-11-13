@@ -1,13 +1,12 @@
 import { Amplify } from 'aws-amplify';
 
 import { PasswordSettings } from '../../../types';
-import { defaultServices } from '../defaultServices';
+import { defaultServices, getAmplifyConfig } from '../defaultServices';
 import { ALLOWED_SPECIAL_CHARACTERS } from '../../../helpers/authenticator/constants';
 
 jest.mock('aws-amplify');
 
 const {
-  getAmplifyConfig,
   validateFormPassword,
   validateConfirmPassword,
   validateCustomSignUp,

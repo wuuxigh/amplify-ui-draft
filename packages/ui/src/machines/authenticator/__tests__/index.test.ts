@@ -1,6 +1,6 @@
 import { interpret } from 'xstate';
 import { setImmediate } from 'timers';
-
+import { AuthContext } from '../types';
 import { createAuthenticatorMachine } from '..';
 
 import type { defaultServices } from '../defaultServices';
@@ -37,7 +37,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })
@@ -91,7 +91,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })
@@ -143,7 +143,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })
@@ -203,7 +203,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })
@@ -255,7 +255,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })
@@ -311,7 +311,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })
@@ -372,7 +372,7 @@ describe('authenticator', () => {
             getCurrentUser: () => Promise.reject(),
             getAmplifyConfig: () =>
               Promise.resolve({}) as ReturnType<
-                (typeof defaultServices)['getAmplifyConfig']
+                AuthContext['services']['getAmplifyConfig']
               >,
           },
         })

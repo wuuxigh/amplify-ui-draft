@@ -1,5 +1,6 @@
 import { State } from 'xstate';
 import { AuthUser } from 'aws-amplify/auth';
+import { getAmplifyConfig } from '../authenticator/defaultServices';
 
 import {
   LoginMechanism,
@@ -127,7 +128,9 @@ export interface AuthContext {
     initialState?: 'signIn' | 'signUp' | 'forgotPassword';
     passwordSettings?: PasswordSettings;
   };
-  services?: Partial<typeof defaultServices>;
+  services?: Partial<
+    typeof defaultServices & { getAmplifyConfig: typeof getAmplifyConfig }
+  >;
   user?: AuthUser;
   // data returned from actors when they finish and reach their final state
   actorDoneData?: ActorDoneData;
