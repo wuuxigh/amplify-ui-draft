@@ -84,15 +84,15 @@ echo "##########################"
 echo "# Start Mega App Install #"
 echo "##########################"
 
-DEPENDENCIES="$FRAMEWORK@$FRAMEWORK_VERSION @aws-amplify/ui-$FRAMEWORK aws-amplify"
+DEPENDENCIES="$FRAMEWORK@$FRAMEWORK_VERSION @aws-amplify/ui-$FRAMEWORK@next aws-amplify@6"
 
 echo "cd ./mega-apps/${MEGA_APP_NAME}"
 cd ./mega-apps/${MEGA_APP_NAME}
 
 if [ "$FRAMEWORK" == 'react' ]; then
     # add react-dom
-    echo "DEPENDENCIES='$DEPENDENCIES react-dom@$FRAMEWORK_VERSION @aws-amplify/ui-react-storage @aws-amplify/ui-react-geo @aws-amplify/ui-react-notifications'"
-    DEPENDENCIES="$DEPENDENCIES react-dom@$FRAMEWORK_VERSION @aws-amplify/ui-react-storage @aws-amplify/ui-react-geo @aws-amplify/ui-react-notifications"
+    echo "DEPENDENCIES='$DEPENDENCIES react-dom@$FRAMEWORK_VERSION @aws-amplify/ui-react-storage@next @aws-amplify/ui-react-geo@next @aws-amplify/ui-react-notifications@next'"
+    DEPENDENCIES="$DEPENDENCIES react-dom@$FRAMEWORK_VERSION @aws-amplify/ui-react-storage@next @aws-amplify/ui-react-geo@next @aws-amplify/ui-react-notifications@next"
 
     if [[ "$BUILD_TOOL" == 'cra' && "$LANGUAGE" == 'ts' ]]; then
         DEP_TYPES="@types/react@$FRAMEWORK_VERSION @types/react-dom@$FRAMEWORK_VERSION"
@@ -103,7 +103,7 @@ elif [ "$FRAMEWORK" == 'angular' ]; then
     # remove angular since it's deprecated https://www.npmjs.com/package/angular
     # We've install @amplify/cli when creating the app
     echo "DEPENDENCIES="@aws-amplify/ui-$FRAMEWORK aws-amplify""
-    DEPENDENCIES="@aws-amplify/ui-$FRAMEWORK aws-amplify"
+    DEPENDENCIES="@aws-amplify/ui-$FRAMEWORK@next aws-amplify@6"
 fi
 
 echo "Dependencies to be installed: $DEPENDENCIES"
