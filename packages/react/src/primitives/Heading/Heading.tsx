@@ -4,34 +4,21 @@ import { classNames } from '@aws-amplify/ui';
 import { classNameModifier, classNameModifierByFlag } from '../shared/utils';
 import { ComponentClassName } from '@aws-amplify/ui';
 import {
-  ForwardRefPrimitive,
   BaseHeadingProps,
+  ForwardRefPrimitive,
+  HeadingElement,
   HeadingProps,
-  HeadingTag,
   Primitive,
 } from '../types';
 import { View } from '../View';
 import { primitiveWithForwardRef } from '../utils/primitiveWithForwardRef';
 
-interface HeadingLevels {
-  [key: number]: HeadingTag;
-}
-
-const headingLevels: HeadingLevels = {
-  1: 'h1',
-  2: 'h2',
-  3: 'h3',
-  4: 'h4',
-  5: 'h5',
-  6: 'h6',
-};
-
-const HeadingPrimitive: Primitive<HeadingProps, HeadingTag> = (
+const HeadingPrimitive: Primitive<HeadingProps, HeadingElement> = (
   { className, children, isTruncated, level = 6, ...rest },
   ref
 ) => (
   <View
-    as={headingLevels[level]}
+    as={`h${level}`}
     className={classNames(
       ComponentClassName.Heading,
       classNameModifier(ComponentClassName.Heading, level),
@@ -52,7 +39,7 @@ const HeadingPrimitive: Primitive<HeadingProps, HeadingTag> = (
 /**
  * [📖 Docs](https://ui.docs.amplify.aws/react/components/heading)
  */
-export const Heading: ForwardRefPrimitive<BaseHeadingProps, HeadingTag> =
+export const Heading: ForwardRefPrimitive<BaseHeadingProps, HeadingElement> =
   primitiveWithForwardRef(HeadingPrimitive);
 
 Heading.displayName = 'Heading';

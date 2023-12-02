@@ -2,8 +2,7 @@ import { BaseTextProps } from './text';
 import { ElementType, PrimitiveProps } from './view';
 
 export type HeadingLevel = 1 | 2 | 3 | 4 | 5 | 6;
-
-export type HeadingTag = 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6';
+export type HeadingElement = Extract<React.ElementType, `h${HeadingLevel}`>;
 
 /** @deprecated For internal use only */
 export interface BaseHeadingProps extends BaseTextProps {
@@ -14,5 +13,5 @@ export interface BaseHeadingProps extends BaseTextProps {
   level?: HeadingLevel;
 }
 
-export type HeadingProps<Element extends ElementType = HeadingTag> =
+export type HeadingProps<Element extends ElementType = HeadingElement> =
   PrimitiveProps<BaseHeadingProps, Element>;
