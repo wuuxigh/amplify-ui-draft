@@ -1,5 +1,132 @@
 # @aws-amplify/ui
 
+## 6.4.1
+
+### Patch Changes
+
+- [#5780](https://github.com/aws-amplify/amplify-ui/pull/5780) [`9d96dd1fe`](https://github.com/aws-amplify/amplify-ui/commit/9d96dd1fe51212e8e55b0dde816122a6f5672762) Thanks [@jordanvn](https://github.com/jordanvn)! - fixed missing styles for FileUploader component
+
+## 6.4.0
+
+### Minor Changes
+
+- [#5767](https://github.com/aws-amplify/amplify-ui/pull/5767) [`afffa89cb`](https://github.com/aws-amplify/amplify-ui/commit/afffa89cb29bb08ff1b626c727a2c9fb93bf11b3) Thanks [@thaddmt](https://github.com/thaddmt)! - feat(primitives): add Avatar primitive
+
+  ```jsx
+  {
+    /* Avatar with image */
+  }
+  <Avatar src="/cats/5.jpg" />;
+  {
+    /* Avatar with default placeholder icon */
+  }
+  <Avatar />;
+  {
+    /* Avatar with initials */
+  }
+  <Avatar>DB</Avatar>;
+  {
+    /* Avatar with custom icon */
+  }
+  <Avatar>
+    <FiSmile style={{ width: '60%', height: '60%' }} />
+  </Avatar>;
+  ```
+
+## 6.3.0
+
+### Minor Changes
+
+- [#5744](https://github.com/aws-amplify/amplify-ui/pull/5744) [`c3dfbe044`](https://github.com/aws-amplify/amplify-ui/commit/c3dfbe044fd18e084cd411ce0ff84dcab1a80224) Thanks [@jordanvn](https://github.com/jordanvn)! - Adds FileUploader as new default name of StorageManager to avoid confusion with new components
+
+## 6.2.0
+
+### Minor Changes
+
+- [#5436](https://github.com/aws-amplify/amplify-ui/pull/5436) [`6e67ab6be`](https://github.com/aws-amplify/amplify-ui/commit/6e67ab6beb65e8ac7c7db6c6586df3c4f219bdbf) Thanks [@vLannaAi](https://github.com/vLannaAi)! - i18n Authenticator in Thai.
+  Localization of Authenticator in the Thai Language.
+  Added a new language using the ISO code 'th'
+  Created a new dictionary for Authenticator strings, and localized with supervision of 3 Thai native speaker, verified by ChatGPT 4.o, Claude Sonnet 3.5, and Google Translate.
+
+### Patch Changes
+
+- [#5645](https://github.com/aws-amplify/amplify-ui/pull/5645) [`634815ff0`](https://github.com/aws-amplify/amplify-ui/commit/634815ff07defd89123963bab98f410c5e1fc9cd) Thanks [@dbanksdesign](https://github.com/dbanksdesign)! - chore(utils): moving humanFileSize to ui package
+
+## 6.1.0
+
+### Minor Changes
+
+- [#5546](https://github.com/aws-amplify/amplify-ui/pull/5546) [`50ef7ca8e`](https://github.com/aws-amplify/amplify-ui/commit/50ef7ca8e3d6ba116f587158c80ea08a5deeb868) Thanks [@gongte1937](https://github.com/gongte1937)! - Update japanese translation file to remove extra period
+
+- [#5170](https://github.com/aws-amplify/amplify-ui/pull/5170) [`d73bd9cc8`](https://github.com/aws-amplify/amplify-ui/commit/d73bd9cc84a2bd07c86d0c6937cbde35fc2c4bc2) Thanks [@dbanksdesign](https://github.com/dbanksdesign)! - feat(ui): experimental component theming
+
+  This feature lets you fully style and theme built-in components even if there is no design token available. For example, previously you could not add a box shadow or gradient background to the built-in Button component unless you wrote plain CSS. Now you can style every CSS property for all the built-in components with type-safety!
+
+  This also lets you define your own components and style them in the same type-safe way with zero runtime computation.
+
+  ### defineComponentTheme()
+
+  ```ts
+  import { defineComponentTheme } from '@aws-amplify/ui-react/server';
+
+  export const buttonTheme = defineComponentTheme({
+    // because 'button' is a built-in component, we get type-safety and hints
+    // based on the theme shape of our button
+    name: 'button',
+    theme: (tokens) => {
+      return {
+        textAlign: 'center',
+        padding: tokens.space.xl,
+        _modifiers: {
+          primary: {
+            backgroundColor: tokens.colors.primary[20],
+          },
+        },
+      };
+    },
+  });
+  ```
+
+  ### createTheme()
+
+  The theme object passed to `createTheme` now has an optional `components` array which is an array of component themes.
+
+  ```ts
+  export const theme = createTheme({
+    name: 'my-theme',
+    components: [buttonTheme, customComponentTheme],
+  });
+  ```
+
+  ### React Server Component support for theming
+
+  You no longer need to use the `<ThemeProvider>` and rely on React context to theme Amplify UI (you still can though!). There is a new import path for RSC-compliant code: '@aws-amplify/ui-react/server' which you can use to import `createTheme` and `defineComponentTheme` as well as a new React Server Component: `<ThemeStyle />` which will inject the styles of your theme into the page.
+
+  ```tsx
+  import { ThemeStyle, createTheme } from '@aws-amplify/ui-react/server';
+
+  const theme = createTheme({
+    //...
+  });
+
+  export default function RootLayout({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    return (
+      <div {...theme.containerProps({ colorMode: 'system' })}>
+        {children}
+        <ThemeStyle theme={theme} />
+      </div>
+    );
+  }
+  ```
+
+### Patch Changes
+
+- [#5449](https://github.com/aws-amplify/amplify-ui/pull/5449) [`0919e55ba`](https://github.com/aws-amplify/amplify-ui/commit/0919e55ba6d5ec5f21fbf6d2062618c51b91c09b) Thanks [@YuJM](https://github.com/YuJM)! - update i18n kr.ts
+
 ## 6.0.17
 
 ### Patch Changes

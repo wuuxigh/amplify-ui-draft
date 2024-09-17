@@ -1,5 +1,166 @@
 # @aws-amplify/ui-react
 
+## 6.3.1
+
+### Patch Changes
+
+- Updated dependencies [[`9d96dd1fe`](https://github.com/aws-amplify/amplify-ui/commit/9d96dd1fe51212e8e55b0dde816122a6f5672762)]:
+  - @aws-amplify/ui@6.4.1
+  - @aws-amplify/ui-react-core@3.0.22
+
+## 6.3.0
+
+### Minor Changes
+
+- [#5767](https://github.com/aws-amplify/amplify-ui/pull/5767) [`afffa89cb`](https://github.com/aws-amplify/amplify-ui/commit/afffa89cb29bb08ff1b626c727a2c9fb93bf11b3) Thanks [@thaddmt](https://github.com/thaddmt)! - feat(textarea): add autoresizing to textarea
+
+  ```jsx
+  export const AutoresizeTextareaExample = () => {
+    const [value, setValue] = React.useState('');
+
+    return (
+      <TextAreaField
+        autoResize
+        label="Comments"
+        value={value}
+        onChange={(e) => {
+          setValue(e.target.value);
+        }}
+      />
+    );
+  };
+  ```
+
+- [#5767](https://github.com/aws-amplify/amplify-ui/pull/5767) [`afffa89cb`](https://github.com/aws-amplify/amplify-ui/commit/afffa89cb29bb08ff1b626c727a2c9fb93bf11b3) Thanks [@thaddmt](https://github.com/thaddmt)! - feat(scrollview): add autoScroll prop
+
+  ```jsx
+  <ScrollView autoScroll="smooth">{/* ... */}</ScrollView>
+  ```
+
+- [#5767](https://github.com/aws-amplify/amplify-ui/pull/5767) [`afffa89cb`](https://github.com/aws-amplify/amplify-ui/commit/afffa89cb29bb08ff1b626c727a2c9fb93bf11b3) Thanks [@thaddmt](https://github.com/thaddmt)! - feat(primitives): add Avatar primitive
+
+  ```jsx
+  {
+    /* Avatar with image */
+  }
+  <Avatar src="/cats/5.jpg" />;
+  {
+    /* Avatar with default placeholder icon */
+  }
+  <Avatar />;
+  {
+    /* Avatar with initials */
+  }
+  <Avatar>DB</Avatar>;
+  {
+    /* Avatar with custom icon */
+  }
+  <Avatar>
+    <FiSmile style={{ width: '60%', height: '60%' }} />
+  </Avatar>;
+  ```
+
+### Patch Changes
+
+- Updated dependencies [[`afffa89cb`](https://github.com/aws-amplify/amplify-ui/commit/afffa89cb29bb08ff1b626c727a2c9fb93bf11b3)]:
+  - @aws-amplify/ui@6.4.0
+  - @aws-amplify/ui-react-core@3.0.21
+
+## 6.2.2
+
+### Patch Changes
+
+- Updated dependencies [[`c3dfbe044`](https://github.com/aws-amplify/amplify-ui/commit/c3dfbe044fd18e084cd411ce0ff84dcab1a80224)]:
+  - @aws-amplify/ui@6.3.0
+  - @aws-amplify/ui-react-core@3.0.20
+
+## 6.2.1
+
+### Patch Changes
+
+- Updated dependencies [[`6e67ab6be`](https://github.com/aws-amplify/amplify-ui/commit/6e67ab6beb65e8ac7c7db6c6586df3c4f219bdbf), [`634815ff0`](https://github.com/aws-amplify/amplify-ui/commit/634815ff07defd89123963bab98f410c5e1fc9cd)]:
+  - @aws-amplify/ui@6.2.0
+  - @aws-amplify/ui-react-core@3.0.19
+
+## 6.2.0
+
+### Minor Changes
+
+- [#5170](https://github.com/aws-amplify/amplify-ui/pull/5170) [`d73bd9cc8`](https://github.com/aws-amplify/amplify-ui/commit/d73bd9cc84a2bd07c86d0c6937cbde35fc2c4bc2) Thanks [@dbanksdesign](https://github.com/dbanksdesign)! - feat(ui): experimental component theming
+
+  This feature lets you fully style and theme built-in components even if there is no design token available. For example, previously you could not add a box shadow or gradient background to the built-in Button component unless you wrote plain CSS. Now you can style every CSS property for all the built-in components with type-safety!
+
+  This also lets you define your own components and style them in the same type-safe way with zero runtime computation.
+
+  ### defineComponentTheme()
+
+  ```ts
+  import { defineComponentTheme } from '@aws-amplify/ui-react/server';
+
+  export const buttonTheme = defineComponentTheme({
+    // because 'button' is a built-in component, we get type-safety and hints
+    // based on the theme shape of our button
+    name: 'button',
+    theme: (tokens) => {
+      return {
+        textAlign: 'center',
+        padding: tokens.space.xl,
+        _modifiers: {
+          primary: {
+            backgroundColor: tokens.colors.primary[20],
+          },
+        },
+      };
+    },
+  });
+  ```
+
+  ### createTheme()
+
+  The theme object passed to `createTheme` now has an optional `components` array which is an array of component themes.
+
+  ```ts
+  export const theme = createTheme({
+    name: 'my-theme',
+    components: [buttonTheme, customComponentTheme],
+  });
+  ```
+
+  ### React Server Component support for theming
+
+  You no longer need to use the `<ThemeProvider>` and rely on React context to theme Amplify UI (you still can though!). There is a new import path for RSC-compliant code: '@aws-amplify/ui-react/server' which you can use to import `createTheme` and `defineComponentTheme` as well as a new React Server Component: `<ThemeStyle />` which will inject the styles of your theme into the page.
+
+  ```tsx
+  import { ThemeStyle, createTheme } from '@aws-amplify/ui-react/server';
+
+  const theme = createTheme({
+    //...
+  });
+
+  export default function RootLayout({
+    children,
+  }: {
+    children: React.ReactNode;
+  }) {
+    return (
+      <div {...theme.containerProps({ colorMode: 'system' })}>
+        {children}
+        <ThemeStyle theme={theme} />
+      </div>
+    );
+  }
+  ```
+
+### Patch Changes
+
+- [#5464](https://github.com/aws-amplify/amplify-ui/pull/5464) [`29f11a53c`](https://github.com/aws-amplify/amplify-ui/commit/29f11a53cc196bde1c25d15f2f79e332f6156cdc) Thanks [@minghuiyang1998](https://github.com/minghuiyang1998)! - fix(accessibility): associated inline error messages with all form fields in aria-describedby.
+
+- [#5378](https://github.com/aws-amplify/amplify-ui/pull/5378) [`e52db7be1`](https://github.com/aws-amplify/amplify-ui/commit/e52db7be1792fb3f83fd7934f25524cdaee2d100) Thanks [@axelEandrews](https://github.com/axelEandrews)! - fixes invalid tab IDs
+
+- Updated dependencies [[`0919e55ba`](https://github.com/aws-amplify/amplify-ui/commit/0919e55ba6d5ec5f21fbf6d2062618c51b91c09b), [`50ef7ca8e`](https://github.com/aws-amplify/amplify-ui/commit/50ef7ca8e3d6ba116f587158c80ea08a5deeb868), [`d73bd9cc8`](https://github.com/aws-amplify/amplify-ui/commit/d73bd9cc84a2bd07c86d0c6937cbde35fc2c4bc2)]:
+  - @aws-amplify/ui@6.1.0
+  - @aws-amplify/ui-react-core@3.0.18
+
 ## 6.1.14
 
 ### Patch Changes
