@@ -1,15 +1,12 @@
 import { defineConfig } from 'rollup';
 import typescript from '@rollup/plugin-typescript';
+import styles from 'rollup-plugin-styles';
 import externals from 'rollup-plugin-node-externals';
 
 // common config settings
-
-// { OUTPUT_PATH: INPUT_PATH }
-const input = { index: 'src/index.ts', elements: 'src/elements/index.ts' };
+const input = ['src/index.ts'];
 const sourceMap = false;
 const tsconfig = 'tsconfig.dist.json';
-
-const esmOutputDir = 'dist/esm';
 
 const config = defineConfig([
   // CJS config
@@ -25,7 +22,7 @@ const config = defineConfig([
   {
     input,
     output: {
-      dir: esmOutputDir,
+      dir: 'dist/esm',
       format: 'es',
       entryFileNames: '[name].mjs',
       preserveModules: true,
@@ -34,12 +31,18 @@ const config = defineConfig([
     plugins: [
       externals({ include: /^@aws-amplify/ }),
       typescript({
-        outDir: esmOutputDir,
+        outDir: 'dist/esm',
         declaration: false,
         sourceMap,
         tsconfig,
       }),
     ],
+  },
+  // CSS config
+  {
+    input: 'src/styles.ts',
+    output: { dir: 'dist', format: 'cjs', assetFileNames: '[name][extname]' },
+    plugins: [styles({ mode: ['extract'] })],
   },
 ]);
 
