@@ -19,11 +19,27 @@ const cjsOutput = {
   interop: 'auto',
 };
 
+const idk = {
+  makeAbsoluteExternalsRelative: true,
+  preserveEntrySignatures: 'strict',
+  output: {
+    dir: 'dist',
+    esModule: true,
+    format: 'cjs',
+    generatedCode: {
+      reservedNamesAsProps: false,
+    },
+    interop: 'compat',
+    systemNullSetters: false,
+  },
+};
+
 const config = defineConfig([
   // CJS config
   {
     input,
-    output: cjsOutput,
+    ...idk,
+    // output: cjsOutput,
     plugins: [
       externals({ include: /^@aws-amplify/ }),
       typescript({ declarationDir: 'dist/types', sourceMap, tsconfig }),
