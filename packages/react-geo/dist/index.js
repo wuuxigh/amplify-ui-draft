@@ -10,11 +10,11 @@ var maplibreGlJsAmplify = require('maplibre-gl-js-amplify');
 var ReactMapGL = require('react-map-gl');
 var uiReactCore = require('@aws-amplify/ui-react-core');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
-var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
-var maplibregl__default = /*#__PURE__*/_interopDefaultLegacy(maplibregl);
-var ReactMapGL__default = /*#__PURE__*/_interopDefaultLegacy(ReactMapGL);
+var React__default = /*#__PURE__*/_interopDefault(React);
+var maplibregl__default = /*#__PURE__*/_interopDefault(maplibregl);
+var ReactMapGL__default = /*#__PURE__*/_interopDefault(ReactMapGL);
 
 /**
  * The `MapView` component uses [react-map-gl](https://visgl.github.io/react-map-gl/) and
@@ -66,14 +66,14 @@ const MapView = React.forwardRef(({ mapLib, mapStyle, style, ...props }, ref) =>
      *
      * The default mapStyle we use is just the map ID provided by aws-exports.
      */
-    return transformRequest ? (React__default["default"].createElement(ReactMapGL__default["default"], { ...props, mapLib: mapLib ?? maplibregl__default["default"], mapStyle: mapStyle ?? geoConfig?.maps?.default, ref: ref, style: styleProps, transformRequest: transformRequest, fog: props.fog, terrain: props.terrain })) : null;
+    return transformRequest ? (React__default.default.createElement(ReactMapGL__default.default, { ...props, mapLib: mapLib ?? maplibregl__default.default, mapStyle: mapStyle ?? geoConfig?.maps?.default, ref: ref, style: styleProps, transformRequest: transformRequest, fog: props.fog, terrain: props.terrain })) : null;
 });
 MapView.displayName = 'MapView';
 
 const VERSION = '2.0.25';
 
 const LOCATION_SEARCH_OPTIONS = {
-    maplibregl: maplibregl__default["default"],
+    maplibregl: maplibregl__default.default,
     marker: { color: '#3FB1CE' },
     popup: true,
     showResultMarkers: { color: '#3FB1CE' },
@@ -94,7 +94,7 @@ const LocationSearchStandalone = (props) => {
             hasMounted.current = true;
         }
     }, [props]);
-    return React__default["default"].createElement("div", { id: LOCATION_SEARCH_CONTAINER });
+    return React__default.default.createElement("div", { id: LOCATION_SEARCH_CONTAINER });
 };
 /**
  * The `<LocationSearch>` component provides location search.
@@ -131,9 +131,9 @@ const LocationSearch = (props) => {
      * upon rendering inside the `LocationSearchStandalone`.
      */
     if (map) {
-        return React__default["default"].createElement(LocationSearchControl, { ...LOCATION_SEARCH_OPTIONS, ...props });
+        return React__default.default.createElement(LocationSearchControl, { ...LOCATION_SEARCH_OPTIONS, ...props });
     }
-    return React__default["default"].createElement(LocationSearchStandalone, { ...LOCATION_SEARCH_OPTIONS, ...props });
+    return React__default.default.createElement(LocationSearchStandalone, { ...LOCATION_SEARCH_OPTIONS, ...props });
 };
 
 exports.LocationSearch = LocationSearch;

@@ -29,7 +29,7 @@ const idk = {
     generatedCode: {
       reservedNamesAsProps: false,
     },
-    interop: 'compat',
+    interop: 'auto',
     systemNullSetters: false,
   },
 };

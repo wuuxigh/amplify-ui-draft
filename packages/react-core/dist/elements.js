@@ -4,11 +4,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
 
-function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
+function _interopDefault (e) { return e && e.__esModule ? e : { default: e }; }
 
-var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var React__default = /*#__PURE__*/_interopDefault(React);
 
-const ElementsContext = React__default["default"].createContext(undefined);
+const ElementsContext = React__default.default.createContext(undefined);
 /**
  * @internal @unstable
  *
@@ -57,7 +57,7 @@ const ElementsContext = React__default["default"].createContext(undefined);
  * ```
  */
 function ElementsProvider({ elements, ...props }) {
-    return React__default["default"].createElement(ElementsContext.Provider, { ...props, value: elements });
+    return React__default.default.createElement(ElementsContext.Provider, { ...props, value: elements });
 }
 
 /**
@@ -78,13 +78,13 @@ function ElementsProvider({ elements, ...props }) {
  */
 function defineBaseElement(input) {
     const { displayName, type } = input;
-    const Element = React__default["default"].forwardRef(({ variant, ...props }, ref) => {
-        const Element = React__default["default"].useContext(ElementsContext)?.[displayName];
+    const Element = React__default.default.forwardRef(({ variant, ...props }, ref) => {
+        const Element = React__default.default.useContext(ElementsContext)?.[displayName];
         if (Element) {
             // only pass `variant` to provided `Element` values
-            return React__default["default"].createElement(Element, { ...props, ref, variant });
+            return React__default.default.createElement(Element, { ...props, ref, variant });
         }
-        return React__default["default"].createElement(type, { ...props, ref });
+        return React__default.default.createElement(type, { ...props, ref });
     });
     Element.displayName = displayName;
     return Element;
@@ -122,7 +122,7 @@ function defineBaseElement(input) {
  * @returns extended `BaseElement` with `defaultProps`
  */
 function withBaseElementProps(Target, defaultProps) {
-    const Component = React__default["default"].forwardRef((props, ref) => (React__default["default"].createElement(Target, { ...(typeof defaultProps === 'function'
+    const Component = React__default.default.forwardRef((props, ref) => (React__default.default.createElement(Target, { ...(typeof defaultProps === 'function'
             ? defaultProps(props)
             : defaultProps),
         ...props, ref: ref })));
