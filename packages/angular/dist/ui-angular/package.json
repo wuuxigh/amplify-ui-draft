@@ -1,0 +1,46 @@
+{
+  "name": "@aws-amplify/ui-angular",
+  "version": "5.0.25",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aws-amplify/amplify-ui",
+    "directory": "packages/angular/projects/ui-angular"
+  },
+  "peerDependencies": {
+    "@angular/core": ">= 14.0.0",
+    "@angular/common": ">= 14.0.0",
+    "aws-amplify": "^6.6.0",
+    "rxjs": "^6.5.3 || ^7.4.0"
+  },
+  "dependencies": {
+    "@aws-amplify/ui": "6.6.0",
+    "nanoid": "3.1.31",
+    "qrcode": "1.5.0",
+    "tslib": "^2.5.2",
+    "xstate": "^4.33.6"
+  },
+  "publishConfig": {
+    "directory": "../../dist/ui-angular"
+  },
+  "module": "fesm2015/aws-amplify-ui-angular.mjs",
+  "es2020": "fesm2020/aws-amplify-ui-angular.mjs",
+  "esm2020": "esm2020/aws-amplify-ui-angular.mjs",
+  "fesm2020": "fesm2020/aws-amplify-ui-angular.mjs",
+  "fesm2015": "fesm2015/aws-amplify-ui-angular.mjs",
+  "typings": "index.d.ts",
+  "exports": {
+    "./package.json": {
+      "default": "./package.json"
+    },
+    ".": {
+      "types": "./index.d.ts",
+      "esm2020": "./esm2020/aws-amplify-ui-angular.mjs",
+      "es2020": "./fesm2020/aws-amplify-ui-angular.mjs",
+      "es2015": "./fesm2015/aws-amplify-ui-angular.mjs",
+      "node": "./fesm2015/aws-amplify-ui-angular.mjs",
+      "default": "./fesm2020/aws-amplify-ui-angular.mjs"
+    }
+  },
+  "sideEffects": false
+}

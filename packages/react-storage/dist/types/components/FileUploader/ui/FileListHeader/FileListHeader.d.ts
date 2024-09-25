@@ -1,0 +1,10 @@
+/// <reference types="react" />
+import { FileUploaderDisplayTextDefault } from '../../utils';
+export interface FileListHeaderProps {
+    allUploadsSuccessful: boolean;
+    displayText: FileUploaderDisplayTextDefault;
+    fileCount: number;
+    remainingFilesCount: number;
+    selectedFilesCount?: number;
+}
+export declare function FileListHeader({ allUploadsSuccessful, displayText, fileCount, remainingFilesCount, selectedFilesCount, }: FileListHeaderProps): JSX.Element;

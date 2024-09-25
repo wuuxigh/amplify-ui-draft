@@ -1,4 +1,4 @@
-dist
+
 # ignore generated primitive catalog ESM
 src/PrimitiveCatalog.ts 
 

@@ -1,0 +1,16 @@
+export declare const BLOCK_CLASS = "amplify-inappmessaging-messagelayout";
+export declare const BUTTON_CLASS = "amplify-inappmessaging-messagelayout__button";
+export declare const CLOSE_BUTTON_CLASS = "amplify-inappmessaging-messagelayout__close-button";
+export declare const CONTENT_CLASS = "amplify-inappmessaging-messagelayout__content";
+export declare const HEADER_CLASS = "amplify-inappmessaging-messagelayout__header";
+export declare const IMAGE_CONTAINER_CLASS = "amplify-inappmessaging-messagelayout__image-container";
+export declare const TEXT_CONTAINER_CLASS = "amplify-inappmessaging-messagelayout__text-container";
+export declare const BODY_TEXT_TEST_ID = "inappmessaging-messagelayout-bodytext";
+export declare const BUTTON_GROUP_TEST_ID = "inappmessaging-messagelayout-buttongroup";
+export declare const CONTENT_TEST_ID = "inappmessaging-messagelayout-content";
+export declare const HEADER_TEXT_TEST_ID = "inappmessaging-messagelayout-headertext";
+export declare const IMAGE_CONTAINER_TEST_ID = "inappmessaging-messagelayout-imagecontainer";
+export declare const MESSAGE_LAYOUT_TEST_ID = "inappmessaging-messagelayout";
+export declare const PRIMARY_BUTTON_TEST_ID = "inappmessaging-messagelayout-primarybutton";
+export declare const SECONDARY_BUTTON_TEST_ID = "inappmessaging-messagelayout-secondarybutton";
+export declare const TEXT_CONTAINER_TEST_ID = "inappmessaging-messagelayout-textcontainer";

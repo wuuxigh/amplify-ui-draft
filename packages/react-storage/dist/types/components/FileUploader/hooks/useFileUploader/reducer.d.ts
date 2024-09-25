@@ -1,0 +1,2 @@
+import { Action, UseFileUploaderState } from './types';
+export declare function fileUploaderStateReducer(state: UseFileUploaderState, action: Action): UseFileUploaderState;
