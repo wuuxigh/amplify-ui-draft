@@ -1,4 +1,7 @@
-import { ListLocations } from '@aws-amplify/storage/storage-browser';
+import {
+  ListLocations,
+  ListLocationsOutput,
+} from '@aws-amplify/storage/storage-browser';
 import { createListLocationsAction } from '../listLocationsAction';
 import { LocationAccess } from '../../types';
 
@@ -199,6 +202,36 @@ describe('createListLocationsAction', () => {
       getFakeLocation('READWRITE', 'PREFIX'),
     ]);
     expect(output.nextToken).toBeUndefined();
+  });
+
+  it('should fail with missing locations list', async () => {
+    mockListLocations.mockResolvedValueOnce({
+      nextToken: 'next',
+    } as any as ListLocationsOutput);
+    const listLocationsAction = createListLocationsAction(mockListLocations);
+
+    await expect(
+      listLocationsAction(
+        { nextToken: undefined, result: [] },
+        { options: { pageSize: 100 } }
+      )
+    ).rejects.toThrow(
+      'Required keys missing for ListLocationsOutput: locations.\nObject: {"nextToken":"next"}'
+    );
+  });
+
+  it('should fail with missing all output', async () => {
+    mockListLocations.mockResolvedValueOnce({} as any as ListLocationsOutput);
+    const listLocationsAction = createListLocationsAction(mockListLocations);
+
+    await expect(
+      listLocationsAction(
+        { nextToken: undefined, result: [] },
+        { options: { pageSize: 100 } }
+      )
+    ).rejects.toThrow(
+      'Required keys missing for ListLocationsOutput: locations.\nObject: {}'
+    );
   });
 
   it.todo('handles a search action as expected');

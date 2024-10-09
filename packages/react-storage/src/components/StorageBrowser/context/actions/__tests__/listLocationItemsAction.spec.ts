@@ -136,6 +136,20 @@ describe('listLocationItemsAction', () => {
     });
   });
 
+  it('should fail if items array is not in output', async () => {
+    // @ts-expect-error `list` returns a union type of `ListPaginateOutput` | `ListAllOutput`
+    listSpy.mockResolvedValueOnce({ nextToken: 'token' });
+
+    await expect(
+      listLocationItemsAction(initialValue, {
+        config,
+        prefix,
+      })
+    ).rejects.toThrow(
+      'Required keys missing for ListPaginateWithPathOutput: items.\nObject: {"nextToken":"token"}'
+    );
+  });
+
   it.todo('handles a search action as expected');
   it.todo('handles a paginate action as expected');
 });
