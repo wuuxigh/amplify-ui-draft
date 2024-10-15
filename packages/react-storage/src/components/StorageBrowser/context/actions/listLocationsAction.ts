@@ -71,6 +71,13 @@ export const createListLocationsAction = (
         pageSize: remainingPageSize,
       });
       checkRequiredKeys(output, `ListLocationsOutput`, ['locations']);
+      output.locations.forEach((location, i) =>
+        checkRequiredKeys(location, `LocationAccess #${i}`, [
+          'scope',
+          'type',
+          'permission',
+        ])
+      );
 
       nextNextToken = output.nextToken;
 

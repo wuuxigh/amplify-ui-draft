@@ -234,6 +234,67 @@ describe('createListLocationsAction', () => {
     );
   });
 
+  it.each([
+    {
+      excluded: 'scope',
+      mockLocation: {
+        permission: 'READ',
+        type: 'BUCKET',
+      },
+    },
+    {
+      excluded: 'permission',
+      mockLocation: {
+        scope: 's3://some-bucket/*',
+        type: 'BUCKET',
+      },
+    },
+    {
+      excluded: 'type',
+      mockLocation: {
+        scope: 's3://some-bucket/*',
+        permission: 'READ',
+      },
+    },
+    {
+      excluded: 'scope, type',
+      mockLocation: {
+        permission: 'READ',
+      },
+    },
+    {
+      excluded: 'scope, type, permission',
+      mockLocation: {},
+    },
+  ])(
+    'should fail with LocationAccess missing $excluded',
+    async ({ excluded, mockLocation }) => {
+      const mockLocations = [
+        ...generateMockLocations(50),
+        mockLocation,
+        ...generateMockLocations(50),
+      ];
+      mockListLocations.mockResolvedValueOnce({
+        nextToken: 'token',
+        // @ts-expect-error remove 1 item from required fields
+        locations: mockLocations,
+      });
+
+      const listLocationsAction = createListLocationsAction(mockListLocations);
+
+      await expect(
+        listLocationsAction(
+          { nextToken: undefined, result: [] },
+          { options: { pageSize: 100 } }
+        )
+      ).rejects.toThrow(
+        `Required keys missing for LocationAccess #50: ${excluded}.\nObject: ${JSON.stringify(
+          mockLocation
+        )}`
+      );
+    }
+  );
+
   it.todo('handles a search action as expected');
   it.todo('handles a refresh action as expected');
 });
