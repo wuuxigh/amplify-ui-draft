@@ -10,6 +10,7 @@ import {
   LocationAccess,
   Permission,
 } from '../types';
+import { checkRequiredKeys } from '../../../FileUploader/utils/checkRequiredKeys';
 
 const PAGE_SIZE = 1000;
 
@@ -69,6 +70,15 @@ export const createListLocationsAction = (
         nextToken: nextNextToken,
         pageSize: remainingPageSize,
       });
+      checkRequiredKeys(output, `ListLocationsOutput`, ['locations']);
+      output.locations.forEach((location, i) =>
+        checkRequiredKeys(location, `LocationAccess #${i}`, [
+          'scope',
+          'type',
+          'permission',
+        ])
+      );
+
       nextNextToken = output.nextToken;
 
       locationsResult = [

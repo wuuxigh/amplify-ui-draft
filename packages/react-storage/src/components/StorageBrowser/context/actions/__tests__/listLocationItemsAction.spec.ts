@@ -136,6 +136,79 @@ describe('listLocationItemsAction', () => {
     });
   });
 
+  it('should fail if items array is not in output', async () => {
+    // @ts-expect-error `list` returns a union type of `ListPaginateOutput` | `ListAllOutput`
+    listSpy.mockResolvedValueOnce({ nextToken: 'token' });
+
+    await expect(
+      listLocationItemsAction(initialValue, {
+        config,
+        prefix,
+      })
+    ).rejects.toThrow(
+      'Required keys missing for ListPaginateWithPathOutput: items.\nObject: {"nextToken":"token"}'
+    );
+  });
+
+  it.each([
+    {
+      excluded: 'path',
+      mockItem: {
+        lastModified: new Date(),
+        size: 1,
+      },
+    },
+    {
+      excluded: 'lastModified',
+      mockItem: {
+        path: `${prefix}key`,
+        size: 1,
+      },
+    },
+    {
+      excluded: 'size',
+      mockItem: {
+        path: `${prefix}key`,
+        lastModified: new Date(),
+      },
+    },
+    {
+      excluded: 'path, size',
+      mockItem: {
+        lastModified: new Date(),
+      },
+    },
+    {
+      excluded: 'path, lastModified, size',
+      mockItem: {},
+    },
+  ])(
+    'should fail with ListOutputItemWithPath missing $excluded',
+    async ({ excluded, mockItem }) => {
+      const mockItems = [
+        ...generateMockItems(50),
+        mockItem,
+        ...generateMockItems(50),
+      ];
+      listSpy.mockResolvedValueOnce({
+        nextToken: 'token',
+        // @ts-expect-error remove 1 item from required fields
+        items: mockItems,
+      });
+
+      await expect(
+        listLocationItemsAction(initialValue, {
+          config,
+          prefix,
+        })
+      ).rejects.toThrow(
+        `Required keys missing for ListOutputItemWithPath #50: ${excluded}.\nObject: ${JSON.stringify(
+          mockItem
+        )}`
+      );
+    }
+  );
+
   it.todo('handles a search action as expected');
   it.todo('handles a paginate action as expected');
 });

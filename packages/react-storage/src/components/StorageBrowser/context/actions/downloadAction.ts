@@ -1,6 +1,7 @@
 import { getUrl } from 'aws-amplify/storage';
 
 import { DownloadActionInput, DownloadActionOutput } from '../types';
+import { checkRequiredKeys } from '../../../FileUploader/utils/checkRequiredKeys';
 
 export async function downloadAction(
   _: DownloadActionOutput,
@@ -25,6 +26,7 @@ export async function downloadAction(
         contentDisposition: 'attachment',
       },
     });
+    checkRequiredKeys(signedUrl, 'GetUrlWithPathOutput', ['url']);
 
     return { signedUrl: signedUrl.url.toString() };
   } catch (e) {

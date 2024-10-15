@@ -12,6 +12,7 @@ import {
   ListActionOutput,
   LocationItem,
 } from '../types';
+import { checkRequiredKeys } from '../../../FileUploader/utils/checkRequiredKeys';
 
 export interface ListLocationItemsActionInput
   extends ListActionInput<ListActionOptions> {}
@@ -106,6 +107,14 @@ export async function listLocationItemsAction(
   };
 
   const output = await list(listInput);
+  checkRequiredKeys(output, `ListPaginateWithPathOutput`, ['items']);
+  output.items.forEach((item, i) =>
+    checkRequiredKeys(item, `ListOutputItemWithPath #${i}`, [
+      'path',
+      'lastModified',
+      'size',
+    ])
+  );
 
   const result = [
     ...(refresh ? [] : prevState.result),

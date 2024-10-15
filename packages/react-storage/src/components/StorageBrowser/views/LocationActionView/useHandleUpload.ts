@@ -8,6 +8,7 @@ import { isFunction, isUndefined } from '@aws-amplify/ui';
 
 import { useGetLocationConfig } from '../../context/config';
 import { TaskStatus } from '../../context/types';
+import { taskTracker } from '../../../FileUploader/utils/taskTracker';
 
 // 5MB for multipart upload
 // https://github.com/aws-amplify/amplify-js/blob/1a5366d113c9af4ce994168653df3aadb142c581/packages/storage/src/providers/s3/utils/constants.ts#L16
@@ -117,6 +118,8 @@ export function useHandleUpload({
 
   const [tasks, setTasks] = React.useState<CancelableTask[]>(() => []);
 
+  const tracker = React.useMemo(() => taskTracker<CancelableTask>(), []);
+
   const handleFileSelect = (newFiles: File[]) => {
     setTasks((prevTasks) => {
       // iterate over new files and create new tasks
@@ -135,9 +138,19 @@ export function useHandleUpload({
         };
       });
 
+      tracker.recordTasksToProcess(newTasks);
       return mergeSelectedTasks(prevTasks, newTasks);
     });
   };
+
+  const handleCancelAll = React.useCallback(() => {
+    tasks.forEach(({ cancel }) => (isFunction(cancel) ? cancel() : undefined));
+  }, [tasks]);
+
+  const uploadFatalError = React.useCallback(() => {
+    handleCancelAll();
+    throw new Error('Upload validation failed');
+  }, [handleCancelAll]);
 
   const processUpload = React.useCallback(
     async (_task?: CancelableTask) => {
@@ -176,7 +189,8 @@ export function useHandleUpload({
           task.size < MULTIPART_UPLOAD_THRESHOLD_BYTES ? undefined : _cancel;
 
         setTasks((prevTasks) =>
-          prevTasks.map(({ key: _key, status, ...rest }) => {
+          prevTasks.map((taskInPrevTasks) => {
+            const { key: _key, status, ...rest } = taskInPrevTasks;
             const isCurrent = _key === key;
             if (isCurrent) {
               return { ...rest, key, status: 'PENDING', cancel };
@@ -189,14 +203,16 @@ export function useHandleUpload({
                 ...rest,
                 key: _key,
                 status: 'QUEUED',
-                cancel: () =>
+                cancel: () => {
+                  tracker.recordTasksCanceled([taskInPrevTasks]);
                   setTasks((prev) =>
                     updateTasks(prev, {
                       key: _key,
                       cancel: undefined,
                       status: 'CANCELED',
                     })
-                  ),
+                  );
+                },
               };
             }
 
@@ -206,18 +222,25 @@ export function useHandleUpload({
 
         await result;
 
+        tracker.recordTasksCompleted([task]);
         setTasks((prevTasks) =>
           updateTasks(prevTasks, { key, cancel: undefined, status: 'COMPLETE' })
         );
       } catch (error) {
         const status = isCancelError(error) ? 'CANCELED' : 'FAILED';
 
+        if (status === 'CANCELED') {
+          tracker.recordTasksCanceled([task]);
+        } else {
+          tracker.recordTasksFailed([task]);
+        }
+
         setTasks((prevTasks) =>
           updateTasks(prevTasks, { key, cancel: undefined, status })
         );
       }
     },
-    [getConfig, tasks, prefix, preventOverwrite]
+    [tasks, prefix, getConfig, preventOverwrite, tracker]
   );
 
   React.useEffect(() => {
@@ -228,14 +251,16 @@ export function useHandleUpload({
 
     const nextTask = tasks.find(({ status }) => status === 'QUEUED');
 
-    if (!nextTask) return;
+    if (!nextTask) {
+      if (!tracker.validate()) {
+        uploadFatalError();
+      }
+
+      return;
+    }
 
     processUpload(nextTask);
-  }, [processUpload, tasks]);
-
-  const handleCancelAll = () => {
-    tasks.forEach(({ cancel }) => (isFunction(cancel) ? cancel() : undefined));
-  };
+  }, [processUpload, tasks, tracker, uploadFatalError]);
 
   return [tasks, () => processUpload(), handleFileSelect, handleCancelAll];
 }
